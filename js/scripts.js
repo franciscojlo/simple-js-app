@@ -4,9 +4,11 @@ let pokemonList = [
       { name: 'Squirtle', height: 1, types: ['water']},
   ];
 
-for (let i=0; i<pokemonList.length; i++) {
-  document.write(pokemonList[i].name + " (height: " + pokemonList[i].height + ")" );
-if (pokemonList[i].height >= 1.5) {
+
+const pokemon = pokemonList[i];
+for (let i=0; i<pokemon.length; i++) {
+  document.write(pokemon.name + " (height: " + pokemon.height + ")" );
+  if (pokemon.height >= 1.5) {
     document.write("Wow, that's big!!")
-    }
-}
+      }
+  }

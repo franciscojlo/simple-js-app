@@ -13,12 +13,10 @@ const pokemonRepository = (function() {
     const pokedex = document.querySelector('.pokedex');
     const listItem = document.createElement('li');
     const pokebutton = document.createElement('button');
-    pokebutton.innerText = `${pokemon.name} (height: ${pokemon.height})`;
+    pokebutton.innerText = `${pokemon.name}`;
     pokebutton.classList.add('pokebutton');
+    pokebutton.setAttribute('data-name', pokemon.name);
     listItem.appendChild(pokebutton);
-    if (pokemon.height >= 1.5) { 
-      pokebutton.innerText += " - Wow, that's big!";
-    }        
     const lineBreak = document.createElement('br');
     listItem.appendChild(lineBreak);
     pokedex.appendChild(listItem);  
@@ -30,12 +28,13 @@ const pokemonRepository = (function() {
 
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function(details) {
-      console.log(details);
+      console.log(`Name: ${pokemon.name}`);
+      console.log(`Height: ${details.height}`);
       pokemon.imgUrl = details.sprites.front_default;
       pokemon.height = details.height;
       const button = document.querySelector(`.pokebutton[data-name="${pokemon.name}"]`);
       button.innerText = `${pokemon.name} (height: ${pokemon.height})`;
-      if (pokemon.height >= 1.5) {
+      if (pokemon.height >= 15) {
         button.innerText += " - Wow, that's big!";
       }
     });

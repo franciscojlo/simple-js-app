@@ -28,17 +28,51 @@ const pokemonRepository = (function() {
 
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function(details) {
-      console.log(`Name: ${pokemon.name}`);
-      console.log(`Height: ${details.height}`);
-      pokemon.imgUrl = details.sprites.front_default;
-      pokemon.height = details.height;
-      const button = document.querySelector(`.pokebutton[data-name="${pokemon.name}"]`);
-      button.innerText = `${pokemon.name} (height: ${pokemon.height})`;
-      if (pokemon.height >= 15) {
-        button.innerText += " - Wow, that's big!";
-      }
+
+      //create modal element
+      const modal = document.createElement('div');
+      modal.classList.add('modal');
+
+      //create modal content
+      const modalContent = document.createElement('div');
+      modalContent.classList.add('modal-content');
+
+      //create close button
+      const closeButton = document.createElement('span');
+      closeButton.classList.add('close-button');
+      closeButton.innerHTML = '&times;';
+      modalContent.appendChild(closeButton);
+
+      //add event listener
+      closeButton.addEventListener('click', function() {
+      modal.remove();
+      });
+
+      //create modal header with pokemon name
+      const modalHeader = document.createElement('h2');
+      modalHeader.textContent = pokemon.name;
+      modalContent.appendChild(modalHeader);
+
+      //create modal body with details
+      const modalBody = document.createElement('div');
+      modalBody.classList.add('modal-body');
+      const heightText = document.createElement('p');
+      heightText.textContent = `Height: ${details.height}`;
+      modalBody.appendChild(heightText);
+      const img = document.createElement('img');
+      img.src = pokemon.imgUrl;
+      img.alt = pokemon.name;
+      modalBody.appendChild(img);
+      modalContent.appendChild(modalBody);
+
+      // Append img element to modal body
+      modalBody.appendChild(img);
+      //append modal content to modal
+      modal.appendChild(modalContent);
+      //append modal to DOM
+      document.body.appendChild(modal);
     });
-  }
+  } 
 
   function loadList() {
     return fetch('https://pokeapi.co/api/v2/pokemon/')

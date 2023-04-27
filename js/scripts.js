@@ -45,7 +45,7 @@ const pokemonRepository = (function() {
 
       //add event listener
       closeButton.addEventListener('click', function() {
-      modal.remove();
+        modal.remove();
       });
 
       //create modal header with pokemon name
@@ -60,12 +60,12 @@ const pokemonRepository = (function() {
       heightText.textContent = `Height: ${details.height}`;
       modalBody.appendChild(heightText);
       const img = document.createElement('img');
-      img.src = pokemon.imgUrl;
+      img.src = details.sprites.front_default;
       img.alt = pokemon.name;
       modalBody.appendChild(img);
       modalContent.appendChild(modalBody);
 
-      // Append img element to modal body
+      //append img element to modal body
       modalBody.appendChild(img);
       //append modal content to modal
       modal.appendChild(modalContent);

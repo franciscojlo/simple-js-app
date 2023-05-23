@@ -12,9 +12,10 @@ const pokemonRepository = (function() {
   function addListItem(pokemon) {
     const pokedex = document.querySelector('.pokedex');
     const listItem = document.createElement('li');
+    listItem.classList.add('list-group-item');
     const pokebutton = document.createElement('button');
     pokebutton.innerText = `${pokemon.name}`;
-    pokebutton.classList.add('pokebutton');
+    pokebutton.classList.add('pokebutton', 'btn');
     pokebutton.setAttribute('data-name', pokemon.name);
     listItem.appendChild(pokebutton);
     const lineBreak = document.createElement('br');

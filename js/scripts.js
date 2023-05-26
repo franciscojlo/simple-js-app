@@ -15,8 +15,10 @@ const pokemonRepository = (function() {
     listItem.classList.add('list-group-item');
     const pokebutton = document.createElement('button');
     pokebutton.innerText = `${pokemon.name}`;
-    pokebutton.classList.add('pokebutton', 'btn');
+    pokebutton.classList.add('btn', 'btn-primary');
     pokebutton.setAttribute('data-name', pokemon.name);
+    pokebutton.setAttribute('data-toggle', 'modal');
+    pokebutton.setAttribute('data-target', '#pokemonModalTitle');
     listItem.appendChild(pokebutton);
     const lineBreak = document.createElement('br');
     listItem.appendChild(lineBreak);
@@ -28,52 +30,19 @@ const pokemonRepository = (function() {
   }
 
   function showDetails(pokemon) {
-    loadDetails(pokemon).then(function(details) {
+  loadDetails(pokemon).then(function(details) {
+    const modalTitle = document.querySelector('#pokemonModalTitle');
+    const modalBody = document.querySelector('#pokemonModalBody');
 
-      //create modal element
-      const modal = document.createElement('div');
-      modal.classList.add('modal');
+    modalTitle.textContent = pokemon.name;
+    modalBody.innerHTML = `
+      <p> Height: ${details.height} </p>
+      <img src="${details.sprites.front_default}" alt="${pokemon.name}">
+    `;
 
-      //create modal content
-      const modalContent = document.createElement('div');
-      modalContent.classList.add('modal-content');
-
-      //create close button
-      const closeButton = document.createElement('span');
-      closeButton.classList.add('close-button');
-      closeButton.innerHTML = '&times;';
-      modalContent.appendChild(closeButton);
-
-      //add event listener
-      closeButton.addEventListener('click', function() {
-        modal.remove();
-      });
-
-      //create modal header with pokemon name
-      const modalHeader = document.createElement('h2');
-      modalHeader.textContent = pokemon.name;
-      modalContent.appendChild(modalHeader);
-
-      //create modal body with details
-      const modalBody = document.createElement('div');
-      modalBody.classList.add('modal-body');
-      const heightText = document.createElement('p');
-      heightText.textContent = `Height: ${details.height}`;
-      modalBody.appendChild(heightText);
-      const img = document.createElement('img');
-      img.src = details.sprites.front_default;
-      img.alt = pokemon.name;
-      modalBody.appendChild(img);
-      modalContent.appendChild(modalBody);
-
-      //append img element to modal body
-      modalBody.appendChild(img);
-      //append modal content to modal
-      modal.appendChild(modalContent);
-      //append modal to DOM
-      document.body.appendChild(modal);
+    $('#pokemonModal').modal('show');
     });
-  } 
+  }
 
   function loadList() {
     return fetch('https://pokeapi.co/api/v2/pokemon/')

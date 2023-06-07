@@ -9,24 +9,22 @@ const pokemonRepository = (function() {
     pokemonList.push(pokemon); 
   } 
 
-  function addListItem(pokemon) {
+    function addListItem(pokemon) {
     const pokedex = document.querySelector('.pokedex');
     const listItem = document.createElement('li');
     listItem.classList.add('list-group-item');
     const pokebutton = document.createElement('button');
-    pokebutton.innerText = `${pokemon.name}`;
+    pokebutton.innerText = pokemon.name;
     pokebutton.classList.add('btn', 'btn-primary');
     pokebutton.setAttribute('data-name', pokemon.name);
     pokebutton.setAttribute('data-toggle', 'modal');
-    pokebutton.setAttribute('data-target', '#pokemonModalTitle');
+    pokebutton.setAttribute('data-target', '#myModal');
     listItem.appendChild(pokebutton);
-    const lineBreak = document.createElement('br');
-    listItem.appendChild(lineBreak);
-    pokedex.appendChild(listItem);  
+    pokedex.appendChild(listItem);
 
-    pokebutton.addEventListener('click', function() {
+    pokebutton.addEventListener('click', function () {
       showDetails(pokemon);
-    })
+    });
   }
 
   function showDetails(pokemon) {
